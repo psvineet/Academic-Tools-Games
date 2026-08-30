@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="https://i.ibb.co/j9WGfB8h/favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Chemical Concentration Calculator</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"><style>:root{--bg:#F5F4F1;--card:#FAFAF8;--text:#0A1628;--muted:#7A8494;--blue:#C9A84C;--border:rgba(10,22,40,0.08);--gold:#C9A84C;--navy:#0A1628;}*{margin:0;padding:0;box-sizing:border-box;font-family:'Noto Sans',sans-serif;}body{background:var(--bg);padding:30px 16px;}.container{max-width:520px;margin:auto;background:var(--card);padding:24px;border-radius:18px;box-shadow:0 6px 24px rgba(10,22,40,0.08);}h2{text-align:center;font-size:18px;font-weight:700;margin-bottom:20px;}input,select{width:100%;padding:12px;margin:8px 0;border-radius:12px;border:1px solid #ddd;font-size:14px;}input:focus,select:focus{border-color:var(--blue);outline:none;}button{width:100%;padding:12px;margin-top:14px;border:none;border-radius:20px;background:rgba(201,168,76,0.12);color:var(--blue);font-weight:600;font-size:14px;cursor:pointer;transition:0.2s;}button:active{transform:scale(0.92);background:rgba(201,168,76,0.18);}.result{margin-top:20px;padding:16px;border-radius:14px;background:rgba(0,0,0,0.03);font-size:14px;display:none;text-align:center;}*{accent-color:#C9A84C;}::selection{background:rgba(201,168,76,0.25);color:#0A1628;}input:focus,select:focus,textarea:focus{outline:none;border-color:#C9A84C !important;box-shadow:0 0 0 3px rgba(201,168,76,0.15) !important;}input[type="range"]{accent-color:#C9A84C;}input[type="checkbox"],input[type="radio"]{accent-color:#C9A84C;}select{background-color:#FAFAF8 !important;color:#0A1628 !important;border-color:rgba(10,22,40,0.12) !important;}option:checked,option:hover{background:#C9A84C !important;color:#0A1628 !important;}footer{text-align:center;font-size:11.5px;color:var(--muted);padding:14px 16px 18px;font-weight:500;}.heart{font-size:13px;display:inline-block;}</style>
+</head><body><div class="container">
+<h2>Chemical Concentration Calculator</h2><label>Select Calculation Type</label>
+<select id="type" onchange="updateForm()">
+<option value="">Select</option>
+<option value="molarity">Molarity (mol/L)</option>
+<option value="molality">Molality (mol/kg)</option>
+<option value="normality">Normality (eq/L)</option>
+<option value="formality">Formality (F)</option>
+<option value="ppm">PPM (parts per million)</option>
+<option value="ppb">PPB (parts per billion)</option>
+<option value="volFromConc">Volume from Concentration</option>
+<option value="massFromConc">Mass from Concentration</option>
+<option value="dilution">Dilution (C₁V₁ = C₂V₂)</option>
+<option value="percent">Percent Solution</option>
+<option value="moleFraction">Mole Fraction</option>
+<option value="conductivity">Conductivity</option>
+<option value="buffer">Buffer pH (Henderson-Hasselbalch)</option>
+<option value="ph">pH (from [H+])</option>
+</select><div id="form"></div>
+<div class="result" id="result"></div></div><footer>© <span id="fyear"></span> Developed with 🫀 by Vineet Pratap Singh</footer>
+<script>var a0_0x2fc3f3=a0_0x3e41;(function(_0x1ec883,_0x2e4b90){var _0x287fd5=a0_0x3e41,_0x51a6c8=_0x1ec883();while(!![]){try{var _0x4ca3f9=-parseInt(_0x287fd5(0x88,'\x6d\x76\x42\x6c'))/(0x2573+-0xe1*-0x2b+-0x11*0x46d)+parseInt(_0x287fd5(0x9f,'\x74\x48\x6f\x46'))/(0x12f9+-0xaf4*-0x2+-0x28df)*(parseInt(_0x287fd5(0x8c,'\x21\x37\x63\x24'))/(0xd3*-0x1f+0x3e+-0xe*-0x1cf))+-parseInt(_0x287fd5(0x9c,'\x24\x6b\x42\x70'))/(-0x57*0x1e+-0x2293+0x2cc9)+parseInt(_0x287fd5(0xa2,'\x7a\x21\x65\x52'))/(-0x1c81+-0xf3f*0x2+-0x1*-0x3b04)+parseInt(_0x287fd5(0xbc,'\x6f\x69\x50\x4b'))/(0x2621*0x1+-0x16f*-0x16+-0x9*0x7bd)*(-parseInt(_0x287fd5(0xbd,'\x71\x4f\x30\x49'))/(0x1874+-0x1*0x25dc+-0xd6f*-0x1))+parseInt(_0x287fd5(0x91,'\x36\x2a\x62\x76'))/(0x30*0x32+-0x3*-0xba3+-0x2c41)*(parseInt(_0x287fd5(0x99,'\x6a\x2a\x30\x6c'))/(-0x7c0+0xc4c+-0x483))+parseInt(_0x287fd5(0x92,'\x73\x42\x4b\x45'))/(-0x4*-0xc2+-0xbd9+0x8db);if(_0x4ca3f9===_0x2e4b90)break;else _0x51a6c8['push'](_0x51a6c8['shift']());}catch(_0x1f570a){_0x51a6c8['push'](_0x51a6c8['shift']());}}}(a0_0x38f1,0x1a43bb+0x34af*-0x49+0x3ae47));function a0_0x38f1(){var _0x28d0d5=['\x57\x51\x42\x63\x4f\x71\x37\x63\x49\x38\x6b\x70\x57\x34\x54\x2f\x7a\x48\x65\x6d\x57\x35\x37\x64\x4e\x61','\x57\x35\x64\x63\x4d\x43\x6f\x70\x57\x34\x4e\x64\x48\x38\x6f\x70\x57\x51\x78\x64\x51\x4b\x57\x34\x57\x52\x2f\x63\x52\x43\x6f\x6d','\x62\x53\x6f\x32\x57\x50\x71','\x6d\x49\x66\x6a','\x71\x53\x6f\x31\x44\x71','\x57\x4f\x39\x72\x41\x47','\x57\x36\x4e\x63\x4a\x38\x6b\x59','\x57\x4f\x4e\x64\x4b\x30\x4b','\x69\x71\x48\x59','\x57\x4f\x42\x64\x4a\x6d\x6b\x6b','\x6d\x48\x39\x56','\x65\x76\x61\x64','\x6a\x59\x6e\x2b','\x57\x50\x50\x49\x44\x71','\x57\x50\x48\x30\x57\x51\x4b','\x57\x35\x44\x6f\x72\x47','\x57\x35\x50\x54\x76\x47','\x42\x4d\x5a\x64\x4d\x57','\x7a\x30\x38\x51\x57\x50\x47\x34\x76\x53\x6b\x75\x67\x43\x6b\x71\x6f\x32\x69\x39\x57\x50\x56\x63\x48\x47','\x57\x37\x43\x45\x73\x57','\x57\x34\x70\x63\x4f\x47\x4f','\x44\x78\x61\x65\x6f\x43\x6f\x71\x57\x34\x66\x44\x57\x37\x6d\x4b\x57\x51\x4a\x64\x4d\x38\x6f\x55\x43\x47','\x57\x34\x78\x64\x47\x66\x30','\x78\x61\x38\x30','\x72\x30\x6c\x63\x4c\x57','\x57\x50\x4a\x64\x4b\x43\x6b\x59\x73\x43\x6b\x4b\x57\x50\x42\x63\x55\x38\x6b\x56','\x70\x6d\x6b\x43\x44\x61','\x64\x63\x65\x76\x57\x52\x47\x53\x57\x52\x71\x49\x65\x38\x6f\x36\x66\x71','\x57\x51\x78\x64\x55\x53\x6b\x34\x74\x53\x6b\x47\x57\x37\x70\x63\x4b\x6d\x6b\x52\x57\x51\x64\x64\x50\x43\x6b\x6e','\x71\x38\x6b\x47\x57\x35\x47\x4e\x44\x43\x6b\x67\x63\x53\x6f\x64\x57\x34\x30\x76\x63\x57','\x77\x47\x6d\x70','\x6e\x72\x37\x63\x4d\x47','\x70\x6d\x6b\x46\x70\x58\x42\x64\x54\x53\x6b\x51\x57\x35\x33\x64\x4b\x6d\x6f\x2b\x69\x38\x6f\x77\x57\x35\x42\x64\x48\x57','\x57\x35\x42\x64\x47\x6d\x6f\x5a','\x72\x77\x2f\x63\x4c\x57','\x57\x52\x4e\x64\x55\x4c\x65','\x61\x67\x64\x64\x4e\x53\x6f\x48\x79\x53\x6b\x54\x57\x35\x61\x44\x57\x4f\x52\x64\x54\x6d\x6b\x72\x57\x36\x38','\x57\x50\x6c\x64\x4a\x6d\x6b\x46','\x57\x4f\x53\x51\x68\x47','\x57\x36\x68\x63\x4c\x6d\x6b\x4d\x57\x4f\x64\x64\x48\x31\x37\x64\x48\x43\x6f\x62\x57\x37\x5a\x64\x4f\x4e\x4e\x64\x4f\x53\x6b\x6b','\x57\x36\x74\x63\x4a\x57\x34','\x77\x5a\x75\x39\x74\x43\x6f\x53\x78\x4e\x52\x63\x4e\x38\x6b\x56\x74\x61','\x57\x37\x6c\x64\x4d\x4d\x31\x31\x74\x43\x6b\x4b\x74\x53\x6f\x53\x57\x36\x6e\x39\x57\x51\x74\x64\x54\x48\x4f\x55','\x68\x66\x54\x4c\x75\x38\x6f\x4e\x57\x37\x50\x59\x57\x37\x4b\x41\x57\x50\x69','\x73\x65\x33\x64\x4f\x61','\x68\x31\x58\x54\x76\x53\x6b\x47\x57\x4f\x38\x33\x57\x37\x38\x64\x57\x50\x4b\x4a\x57\x51\x4f\x54','\x57\x50\x42\x64\x53\x53\x6b\x50\x43\x53\x6b\x79\x6a\x43\x6b\x36\x70\x6d\x6b\x74\x6d\x57','\x57\x50\x69\x6d\x74\x47','\x71\x73\x6c\x63\x4e\x71','\x6c\x43\x6b\x44\x57\x52\x43\x6a\x6e\x43\x6b\x34\x57\x36\x42\x63\x49\x72\x78\x64\x54\x57','\x6f\x62\x39\x31','\x6e\x62\x33\x63\x4c\x47','\x57\x50\x57\x44\x66\x49\x37\x64\x49\x58\x52\x63\x51\x4e\x6a\x78\x57\x35\x70\x64\x55\x53\x6b\x6d\x57\x50\x75','\x57\x50\x70\x64\x53\x6d\x6b\x42','\x57\x51\x6c\x64\x55\x53\x6b\x38\x74\x53\x6f\x71\x57\x36\x4a\x63\x52\x6d\x6b\x7a\x57\x52\x78\x64\x52\x71','\x57\x50\x2f\x63\x4d\x33\x48\x51\x57\x4f\x31\x47\x77\x66\x69','\x46\x43\x6f\x78\x57\x36\x69'];a0_0x38f1=function(){return _0x28d0d5;};return a0_0x38f1();}var a0_0x4c96ea=(function(){var _0x2ea1b4=!![];return function(_0x7456bd,_0xf4cfaa){var _0x5a0703=_0x2ea1b4?function(){var _0x2b119a=a0_0x3e41;if(_0xf4cfaa){var _0xfe1e3a=_0xf4cfaa[_0x2b119a(0xae,'\x4c\x21\x28\x65')+'\x6c\x79'](_0x7456bd,arguments);return _0xf4cfaa=null,_0xfe1e3a;}}:function(){};return _0x2ea1b4=![],_0x5a0703;};}()),a0_0x916369=a0_0x4c96ea(this,function(){var _0x5384f1=a0_0x3e41,_0x206725={};_0x206725[_0x5384f1(0x8b,'\x24\x53\x63\x68')+'\x51\x74']=function(_0x14ee11,_0x37d367){return _0x14ee11!==_0x37d367;},_0x206725[_0x5384f1(0x9d,'\x7a\x21\x65\x52')+'\x57\x69']=_0x5384f1(0x9b,'\x35\x43\x35\x70')+_0x5384f1(0x8e,'\x5d\x50\x4f\x66')+_0x5384f1(0x90,'\x78\x71\x51\x6e')+_0x5384f1(0xc0,'\x35\x43\x35\x70');var _0x26a7ba=_0x206725;if(_0x26a7ba[_0x5384f1(0x89,'\x54\x32\x6a\x25')+'\x51\x74'](a0_0x916369[_0x5384f1(0xaf,'\x71\x76\x37\x5e')+'\x64']()[_0x5384f1(0xbb,'\x29\x6f\x30\x6d')+_0x5384f1(0x94,'\x70\x26\x45\x4e')+'\x6e\x67']()[_0x5384f1(0x97,'\x33\x37\x5d\x25')+_0x5384f1(0xa5,'\x7a\x41\x56\x44')+'\x66']('\x0a'),-(-0x2578+-0x1c9b+-0x4*-0x1085)))return;return a0_0x916369[_0x5384f1(0xb7,'\x31\x49\x39\x6f')+_0x5384f1(0xb0,'\x31\x53\x69\x64')+'\x6e\x67']()[_0x5384f1(0xac,'\x24\x79\x38\x7a')+_0x5384f1(0xb8,'\x4a\x35\x66\x42')](_0x26a7ba[_0x5384f1(0xad,'\x34\x21\x58\x36')+'\x57\x69'])[_0x5384f1(0xbf,'\x4a\x35\x66\x42')+_0x5384f1(0xa9,'\x34\x21\x58\x36')+'\x6e\x67']()[_0x5384f1(0xb5,'\x35\x61\x42\x70')+_0x5384f1(0x98,'\x21\x37\x63\x24')+_0x5384f1(0xa4,'\x76\x4b\x78\x58')+'\x6f\x72'](a0_0x916369)[_0x5384f1(0x8d,'\x7a\x21\x65\x52')+_0x5384f1(0xb4,'\x4e\x21\x49\x28')](_0x26a7ba[_0x5384f1(0xb2,'\x35\x43\x35\x70')+'\x57\x69']);});function a0_0x3e41(_0x31f483,_0x4c40aa){_0x31f483=_0x31f483-(-0xa86+0x1b83+0x1*-0x1075);var _0x1febdd=a0_0x38f1();var _0x925fe4=_0x1febdd[_0x31f483];if(a0_0x3e41['\x7a\x6a\x41\x52\x57\x4a']===undefined){var _0x16d4a5=function(_0x2c82e8){var _0x50d6b5='\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x2b\x2f\x3d';var _0xf63dcd='',_0x36cd30='',_0x1a5f2d=_0xf63dcd+_0x16d4a5,_0x4bc747=(''+function(){return 0x2fc*0x4+0x11e6+-0x3*0x9f2;})['\x69\x6e\x64\x65\x78\x4f\x66']('\x0a')!==-(-0x2022+0x1*0x20aa+-0x87);for(var _0x7d4f35=0x2123+-0x11ad+-0xf76*0x1,_0x37ba30,_0x5d13f0,_0x427634=-0xfc0+0x1330+-0x10*0x37;_0x5d13f0=_0x2c82e8['\x63\x68\x61\x72\x41\x74'](_0x427634++);~_0x5d13f0&&(_0x37ba30=_0x7d4f35%(0xa5*0x26+0x2*0x4af+0x4c*-0x72)?_0x37ba30*(0x16e5+0x1*-0x5b+-0x3*0x76e)+_0x5d13f0:_0x5d13f0,_0x7d4f35++%(-0xcbc+-0x1*0x1eb5+0x5*0x8b1))?_0xf63dcd+=_0x4bc747||_0x1a5f2d['\x63\x68\x61\x72\x43\x6f\x64\x65\x41\x74'](_0x427634+(0x2437+-0x2b*0xca+-0x23f*0x1))-(-0x1510+0x4ff*0x3+0x61d)!==0x4*0x87b+0x306+-0x24f2*0x1?String['\x66\x72\x6f\x6d\x43\x68\x61\x72\x43\x6f\x64\x65'](0x2131+-0x1a36+0x4*-0x17f&_0x37ba30>>(-(-0x2578+-0x1c9b+-0x3*-0x1607)*_0x7d4f35&-0x24af+-0x4bb*0x7+0x45d2)):_0x7d4f35:0x767*-0x1+-0x15ed+-0x2*-0xeaa){_0x5d13f0=_0x50d6b5['\x69\x6e\x64\x65\x78\x4f\x66'](_0x5d13f0);}for(var _0x5a38bd=-0x15b*-0x3+0x5*-0x529+0x15bc,_0x49037e=_0xf63dcd['\x6c\x65\x6e\x67\x74\x68'];_0x5a38bd<_0x49037e;_0x5a38bd++){_0x36cd30+='\x25'+('\x30\x30'+_0xf63dcd['\x63\x68\x61\x72\x43\x6f\x64\x65\x41\x74'](_0x5a38bd)['\x74\x6f\x53\x74\x72\x69\x6e\x67'](0x19ca*-0x1+-0x254*-0xb+0x1*0x3e))['\x73\x6c\x69\x63\x65'](-(0x158*0x11+0x1162+-0x35a*0xc));}return decodeURIComponent(_0x36cd30);};var _0x5449c9=function(_0xf3e90f,_0x450017){var _0x454faf=[],_0x1f6840=0x26c9+-0x2667+-0x62,_0x2912c1,_0x2cec97='';_0xf3e90f=_0x16d4a5(_0xf3e90f);var _0x5bb05e;for(_0x5bb05e=0x31*-0x81+0x7f*0x28+0x1*0x4d9;_0x5bb05e<-0x5*-0x2f5+0x1c6e+-0x2a37;_0x5bb05e++){_0x454faf[_0x5bb05e]=_0x5bb05e;}for(_0x5bb05e=-0x1*0x229f+-0x8b+0x232a;_0x5bb05e<-0x1499+0x266d*-0x1+0x3c06;_0x5bb05e++){_0x1f6840=(_0x1f6840+_0x454faf[_0x5bb05e]+_0x450017['\x63\x68\x61\x72\x43\x6f\x64\x65\x41\x74'](_0x5bb05e%_0x450017['\x6c\x65\x6e\x67\x74\x68']))%(0x12bc+-0x4*-0x43e+-0x8ad*0x4),_0x2912c1=_0x454faf[_0x5bb05e],_0x454faf[_0x5bb05e]=_0x454faf[_0x1f6840],_0x454faf[_0x1f6840]=_0x2912c1;}_0x5bb05e=-0x259a+0x7ab+0x1def,_0x1f6840=0x1*-0x137+0xd4*0x8+-0x569*0x1;for(var _0x532daf=0x2573+-0xe1*-0x2b+-0x2*0x259f;_0x532daf<_0xf3e90f['\x6c\x65\x6e\x67\x74\x68'];_0x532daf++){_0x5bb05e=(_0x5bb05e+(0x12f9+-0xaf4*-0x2+-0x28e0))%(0xd3*-0x1f+0x3e+-0xf*-0x1c1),_0x1f6840=(_0x1f6840+_0x454faf[_0x5bb05e])%(-0x57*0x1e+-0x2293+0x2dc5),_0x2912c1=_0x454faf[_0x5bb05e],_0x454faf[_0x5bb05e]=_0x454faf[_0x1f6840],_0x454faf[_0x1f6840]=_0x2912c1,_0x2cec97+=String['\x66\x72\x6f\x6d\x43\x68\x61\x72\x43\x6f\x64\x65'](_0xf3e90f['\x63\x68\x61\x72\x43\x6f\x64\x65\x41\x74'](_0x532daf)^_0x454faf[(_0x454faf[_0x5bb05e]+_0x454faf[_0x1f6840])%(-0x1c81+-0xf3f*0x2+-0x1*-0x3bff)]);}return _0x2cec97;};a0_0x3e41['\x6c\x4e\x72\x67\x4d\x5a']=_0x5449c9,a0_0x3e41['\x49\x59\x6f\x5a\x75\x4e']={},a0_0x3e41['\x7a\x6a\x41\x52\x57\x4a']=!![];}var _0x372649=_0x1febdd[0x2621*0x1+-0x16f*-0x16+-0x1d*0x267],_0x2e8681=_0x31f483+_0x372649,_0x2dce40=a0_0x3e41['\x49\x59\x6f\x5a\x75\x4e'][_0x2e8681];if(!_0x2dce40){if(a0_0x3e41['\x4e\x45\x41\x67\x4c\x70']===undefined){var _0x1b3822=function(_0x496613){this['\x54\x45\x63\x77\x58\x4f']=_0x496613,this['\x56\x62\x55\x43\x7a\x46']=[0x1874+-0x1*0x25dc+-0xd69*-0x1,0x30*0x32+-0x3*-0xba3+-0x2c49,-0x7c0+0xc4c+-0x48c],this['\x4a\x5a\x54\x65\x6a\x49']=function(){return'\x6e\x65\x77\x53\x74\x61\x74\x65';},this['\x61\x6c\x58\x50\x4f\x49']='\x5c\x77\x2b\x20\x2a\x5c\x28\x5c\x29\x20\x2a\x7b\x5c\x77\x2b\x20\x2a',this['\x50\x61\x41\x75\x47\x6e']='\x5b\x27\x7c\x22\x5d\x2e\x2b\x5b\x27\x7c\x22\x5d\x3b\x3f\x20\x2a\x7d';};_0x1b3822['\x70\x72\x6f\x74\x6f\x74\x79\x70\x65']['\x67\x72\x49\x72\x70\x55']=function(){var _0x8ce9a7=new RegExp(this['\x61\x6c\x58\x50\x4f\x49']+this['\x50\x61\x41\x75\x47\x6e']),_0x2bbe67=_0x8ce9a7['\x74\x65\x73\x74'](this['\x4a\x5a\x54\x65\x6a\x49']['\x74\x6f\x53\x74\x72\x69\x6e\x67']())?--this['\x56\x62\x55\x43\x7a\x46'][-0x4*-0xc2+-0xbd9+0x8d2]:--this['\x56\x62\x55\x43\x7a\x46'][0x2261+0x347*-0x6+-0xeb7];return this['\x49\x59\x51\x6f\x5a\x66'](_0x2bbe67);},_0x1b3822['\x70\x72\x6f\x74\x6f\x74\x79\x70\x65']['\x49\x59\x51\x6f\x5a\x66']=function(_0x4ed777){if(!Boolean(~_0x4ed777))return _0x4ed777;return this['\x68\x4d\x64\x68\x51\x51'](this['\x54\x45\x63\x77\x58\x4f']);},_0x1b3822['\x70\x72\x6f\x74\x6f\x74\x79\x70\x65']['\x68\x4d\x64\x68\x51\x51']=function(_0x5ecbf0){for(var _0x138f9e=0x18a*-0x9+-0x124+-0x13*-0xca,_0x58b0ee=this['\x56\x62\x55\x43\x7a\x46']['\x6c\x65\x6e\x67\x74\x68'];_0x138f9e<_0x58b0ee;_0x138f9e++){this['\x56\x62\x55\x43\x7a\x46']['\x70\x75\x73\x68'](Math['\x72\x6f\x75\x6e\x64'](Math['\x72\x61\x6e\x64\x6f\x6d']())),_0x58b0ee=this['\x56\x62\x55\x43\x7a\x46']['\x6c\x65\x6e\x67\x74\x68'];}return _0x5ecbf0(this['\x56\x62\x55\x43\x7a\x46'][-0x15f0+-0x2*-0x559+0xb3e]);},(''+function(){return 0x157a+-0x19a*-0x7+-0x20b0;})['\x69\x6e\x64\x65\x78\x4f\x66']('\x0a')===-(0x1509*-0x1+0x41c*0x3+0x8b6)&&new _0x1b3822(a0_0x3e41)['\x67\x72\x49\x72\x70\x55'](),a0_0x3e41['\x4e\x45\x41\x67\x4c\x70']=!![];}_0x925fe4=a0_0x3e41['\x6c\x4e\x72\x67\x4d\x5a'](_0x925fe4,_0x4c40aa),a0_0x3e41['\x49\x59\x6f\x5a\x75\x4e'][_0x2e8681]=_0x925fe4;}else _0x925fe4=_0x2dce40;return _0x925fe4;}a0_0x916369(),document[a0_0x2fc3f3(0xaa,'\x7a\x21\x65\x52')+a0_0x2fc3f3(0xa7,'\x31\x4d\x4b\x78')+a0_0x2fc3f3(0x9a,'\x34\x21\x58\x36')+a0_0x2fc3f3(0xb1,'\x24\x6b\x42\x70')+'\x49\x64'](a0_0x2fc3f3(0xa0,'\x6a\x2a\x30\x6c')+'\x61\x72')[a0_0x2fc3f3(0xa3,'\x4f\x38\x37\x36')+a0_0x2fc3f3(0xa6,'\x4c\x21\x28\x65')+a0_0x2fc3f3(0x8a,'\x6d\x5e\x7a\x72')+'\x6e\x74']=new Date()[a0_0x2fc3f3(0xab,'\x34\x21\x58\x36')+a0_0x2fc3f3(0xa8,'\x78\x71\x51\x6e')+a0_0x2fc3f3(0xb9,'\x6d\x5e\x7a\x72')+'\x61\x72']();</script><script>
+function updateForm() {
+const type = document.getElementById("type").value;
+const form = document.getElementById("form");
+const result = document.getElementById("result");
+result.style.display = 'none';
+let html = '';
+switch (type) {
+case 'molarity':
+html = `
+<label>Mass of solute (g)</label><input type="number" id="mass">
+<label>Molar mass (g/mol)</label><input type="number" id="molarMass">
+<label>Volume of solution (L)</label><input type="number" id="volume">
+<button onclick="calculate('${type}')">Calculate</button>`;
+break;
+case 'molality':
+html = `
+<label>Weight of solute (g)</label><input type="number" id="solute">
+<label>Molecular weight (g/mol)</label><input type="number" id="mol_weight">
+<label>Mass of solvent (kg)</label><input type="number" id="solvent">
+<button onclick="calculate('${type}')">Calculate</button>`;
+break;
+case 'normality':
+html = `
+<label>Mass of solute (g)</label><input type="number" id="mass">
+<label>Equivalent weight (g/eq)</label><input type="number" id="eqWeight">
+<label>Volume of solution (L)</label><input type="number" id="volume">
+<button onclick="calculate('${type}')">Calculate</button>`;
+break;
+case 'formality':
+html = `
+<label>Mass of solute (g)</label><input type="number" id="mass">
+<label>Formula weight (g/mol)</label><input type="number" id="fw">
+<label>Volume of solution (L)</label><input type="number" id="volume">
+<button onclick="calculate('${type}')">Calculate</button>`;
+break;
+case 'ppm':
+case 'ppb':
+html = `
+<label>Mass of solute (mg)</label><input type="number" id="mass">
+<label>Volume of solution (L)</label><input type="number" id="solution">
+<button onclick="calculate('${type}')">Calculate</button>`;
+break;
+case 'volFromConc':
+html = `
+<label>Mass of solute (g)</label><input type="number" id="mass">
+<label>Molar mass (g/mol)</label><input type="number" id="molarMass">
+<label>Concentration (mol/L)</label><input type="number" id="conc">
+<button onclick="calculate('${type}')">Calculate</button>`;
+break;
+case 'massFromConc':
+html = `
+<label>Concentration (mol/L)</label><input type="number" id="conc">
+<label>Volume (L)</label><input type="number" id="volume">
+<label>Molar mass (g/mol)</label><input type="number" id="molarMass">
+<button onclick="calculate('${type}')">Calculate</button>`;
+break;
+case 'dilution':
+html = `
+<label>Initial Concentration (C₁)</label><input type="number" id="c1">
+<label>Initial Volume (V₁)</label><input type="number" id="v1">
+<label>Final Concentration (C₂)</label><input type="number" id="c2">
+<button onclick="calculate('${type}')">Calculate</button>`;
+break;
+case 'percent':
+html = `
+<label>Type of Percent Solution</label>
+<select id="percentType">
+<option value="w_w">w/w</option>
+<option value="v_v">v/v</option>
+<option value="w_v">w/v</option>
+</select>
+<label>Amount of solute</label><input type="number" id="solute">
+<label>Amount of solution</label><input type="number" id="solution">
+<button onclick="calculate('${type}')">Calculate</button>`;
+break;
+case 'moleFraction':
+html = `
+<label>Moles of component A</label><input type="number" id="molA">
+<label>Moles of component B</label><input type="number" id="molB">
+<button onclick="calculate('${type}')">Calculate</button>`;
+break;
+case 'conductivity':
+html = `
+<label>Conductance (G, S)</label><input type="number" id="G">
+<label>Cell constant (K, cm⁻¹)</label><input type="number" id="K">
+<button onclick="calculate('${type}')">Calculate</button>`;
+break;
+case 'buffer':
+html = `
+<label>pKa</label><input type="number" id="pka">
+<label>[A⁻] (Conjugate base)</label><input type="number" id="a">
+<label>[HA] (Acid)</label><input type="number" id="ha">
+<button onclick="calculate('${type}')">Calculate</button>`;
+break;
+case 'ph':
+html = `
+<label>Hydrogen ion concentration [H⁺] (mol/L)</label><input type="number" id="h">
+<button onclick="calculate('${type}')">Calculate</button>`;
+break;
+}
+form.innerHTML = html;
+}
+function calculate(type) {
+const result = document.getElementById("result");
+let output = '';
+switch (type) {
+case 'molarity':
+output = `Molarity: ${(parseFloat(mass.value) / parseFloat(molarMass.value) / parseFloat(volume.value)).toFixed(4)} mol/L`;
+break;
+case 'molality':
+const solute = document.getElementById("solute");
+const mol_weight = document.getElementById("mol_weight");
+const solvent = document.getElementById("solvent");
+const moles = parseFloat(solute.value) / parseFloat(mol_weight.value);
+const molality = moles / parseFloat(solvent.value);
+output = `Molality: ${molality.toFixed(4)} mol/kg`;
+break;
+case 'normality':
+output = `Normality: ${(parseFloat(mass.value) / parseFloat(eqWeight.value) / parseFloat(volume.value)).toFixed(4)} eq/L`;
+break;
+case 'formality':
+output = `Formality: ${(parseFloat(mass.value) / parseFloat(fw.value) / parseFloat(volume.value)).toFixed(4)} F`;
+break;
+case 'ppm':
+output = `PPM: ${(parseFloat(mass.value) / parseFloat(solution.value) * 1000).toFixed(2)} ppm`;
+break;
+case 'ppb':
+output = `PPB: ${(parseFloat(mass.value) / parseFloat(solution.value) * 1000000).toFixed(2)} ppb`;
+break;
+case 'volFromConc':
+const molesNeeded = parseFloat(mass.value) / parseFloat(molarMass.value);
+output = `Required Volume: ${(molesNeeded / parseFloat(conc.value)).toFixed(4)} L`;
+break;
+case 'massFromConc':
+output = `Mass of solute: ${(parseFloat(conc.value) * parseFloat(volume.value) * parseFloat(molarMass.value)).toFixed(4)} g`;
+break;
+case 'dilution':
+output = `Required Volume (V₂): ${(parseFloat(c1.value) * parseFloat(v1.value) / parseFloat(c2.value)).toFixed(4)} L`;
+break;
+case 'percent':
+const percentType = document.getElementById("percentType").value;
+const sol = parseFloat(document.getElementById("solute").value);
+const soln = parseFloat(document.getElementById("solution").value);
+let label = '';
+if(percentType==='w_w') label='w/w';
+if(percentType==='v_v') label='v/v';
+if(percentType==='w_v') label='w/v';
+output = `Percent Solution (${label}): ${(sol / soln * 100).toFixed(2)}%`;
+break;
+case 'moleFraction':
+output = `Mole Fraction of A: ${(parseFloat(molA.value) / (parseFloat(molA.value) + parseFloat(molB.value))).toFixed(4)}`;
+break;
+case 'conductivity':
+output = `Conductivity: ${(parseFloat(G.value) * parseFloat(K.value)).toFixed(4)} S/cm`;
+break;
+case 'buffer':
+output = `pH of Buffer: ${(parseFloat(pka.value) + Math.log10(parseFloat(a.value) / parseFloat(ha.value))).toFixed(2)}`;
+break;
+case 'ph':
+output = `pH: ${(-Math.log10(parseFloat(h.value))).toFixed(2)}`;
+break;
+}
+result.innerText = output;
+result.style.display = 'block';
+}
+</script></body>
+</html>

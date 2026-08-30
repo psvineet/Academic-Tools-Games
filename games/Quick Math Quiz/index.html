@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="icon" type="image/png" href="https://i.ibb.co/j9WGfB8h/favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Quick Math Quiz</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet"><style>:root{--bg:#F5F4F1;--card:#FAFAF8;--text:#0A1628;--muted:#7A8494;--blue:#C9A84C;--border:rgba(10,22,40,0.08);--gold:#C9A84C;--navy:#0A1628;}*{margin:0;padding:0;box-sizing:border-box;font-family:'Noto Sans',sans-serif;}body{background:var(--bg);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}.game-container{background:var(--card);padding:22px;border-radius:18px;box-shadow:0 6px 24px rgba(10,22,40,0.08);width:100%;max-width:400px;text-align:center;}.top-row{display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin-bottom:14px;color:var(--text);}select{width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);font-size:14px;margin-bottom:14px;background:#fff;}.status{font-size:18px;font-weight:600;color:var(--text);margin:14px 0;}.board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0;}.cell{padding:16px;font-size:18px;font-weight:600;border-radius:14px;background:rgba(0,0,0,0.04);cursor:pointer;transition:0.2s;opacity:0.6;pointer-events:none;}.cell.active{opacity:1;pointer-events:auto;}.cell:active{transform:scale(0.92);}.reset-btn{width:100%;padding:12px;border:none;border-radius:20px;background:rgba(201,168,76,0.12);color:var(--blue);font-weight:600;font-size:14px;cursor:pointer;margin-top:10px;}.reset-btn:active{transform:scale(0.92);background:rgba(201,168,76,0.18);}#feedback{font-size:14px;margin-top:10px;color:var(--muted);min-height:18px;}@keyframes beat{0%,100%{transform:scale(1);}50%{transform:scale(1.25);}}*{accent-color:#C9A84C;}::selection{background:rgba(201,168,76,0.25);color:#0A1628;}input:focus,select:focus,textarea:focus{outline:none;border-color:#C9A84C !important;box-shadow:0 0 0 3px rgba(201,168,76,0.15) !important;}input[type="range"]{accent-color:#C9A84C;}input[type="checkbox"],input[type="radio"]{accent-color:#C9A84C;}select{background-color:#FAFAF8 !important;color:#0A1628 !important;border-color:rgba(10,22,40,0.12) !important;}option:checked,option:hover{background:#C9A84C !important;color:#0A1628 !important;}footer{text-align:center;font-size:11.5px;color:var(--muted);padding:14px 16px 18px;font-weight:500;}.heart{font-size:13px;display:inline-block;}</style>
+</head><body><div>
+<div class="game-container"><div class="top-row">
+<span>Score: <span id="score">0</span></span>
+<span>Time: <span id="timer">60</span>s</span>
+</div><select id="difficulty">
+<option value="easy">Easy</option>
+<option value="medium">Medium</option>
+<option value="hard">Hard</option>
+</select><div class="status" id="question"></div>
+<div class="board" id="options"></div>
+<div id="feedback"></div><button class="reset-btn" id="startBtn" onclick="startGame()">Start</button></div><footer>© <span id="fyear"></span> Developed with 🫀 by Vineet Pratap Singh</footer>
+<script>function a0_0x40a4(){var _0x407ecb=['\x77\x67\x48\x76','\x57\x35\x56\x64\x52\x53\x6b\x63','\x45\x4e\x35\x48','\x77\x32\x4f\x47','\x57\x4f\x37\x63\x48\x63\x30','\x6a\x59\x43\x53','\x57\x51\x76\x31\x57\x50\x78\x63\x53\x38\x6b\x5a\x6c\x53\x6b\x74\x57\x50\x68\x64\x4f\x53\x6b\x54\x68\x6d\x6b\x6b','\x57\x34\x64\x64\x52\x53\x6b\x36','\x6f\x64\x72\x45\x67\x53\x6f\x45\x57\x35\x39\x7a\x44\x78\x56\x64\x49\x61','\x44\x74\x78\x64\x52\x38\x6f\x61\x6f\x6d\x6b\x62\x46\x6d\x6f\x4a\x57\x4f\x53\x49\x57\x52\x70\x63\x4a\x4b\x57','\x74\x43\x6b\x57\x57\x34\x30','\x72\x77\x65\x70','\x69\x57\x46\x64\x51\x65\x57\x71\x46\x67\x5a\x63\x47\x62\x50\x6d\x57\x36\x66\x31','\x57\x52\x68\x64\x4c\x32\x4f','\x68\x4b\x4a\x64\x53\x43\x6f\x4b\x57\x37\x74\x64\x51\x43\x6b\x48\x46\x4d\x44\x32\x57\x36\x79\x36','\x41\x6d\x6f\x2f\x57\x51\x79','\x71\x77\x52\x64\x52\x47','\x57\x36\x68\x63\x55\x38\x6f\x73\x57\x37\x37\x63\x54\x43\x6f\x62\x57\x36\x33\x63\x49\x53\x6b\x63','\x57\x37\x52\x64\x4a\x38\x6b\x58','\x57\x34\x33\x64\x4a\x6d\x6b\x52','\x75\x4b\x6a\x65','\x44\x43\x6b\x4f\x6a\x61','\x57\x35\x52\x64\x4b\x68\x57','\x6e\x6d\x6b\x4f\x57\x50\x71','\x57\x52\x53\x46\x57\x36\x2f\x64\x47\x73\x64\x64\x52\x67\x37\x63\x4b\x76\x74\x64\x4e\x47','\x73\x33\x33\x64\x54\x71','\x6c\x38\x6f\x53\x78\x47','\x41\x53\x6f\x45\x43\x30\x66\x41\x65\x43\x6b\x34\x57\x35\x6c\x64\x4b\x6d\x6f\x32\x61\x43\x6f\x46\x68\x61','\x79\x72\x37\x63\x4a\x78\x56\x64\x4c\x4e\x64\x63\x4a\x61\x6a\x46','\x6a\x67\x4a\x63\x4f\x64\x31\x6a\x65\x76\x43','\x79\x38\x6f\x33\x6b\x68\x64\x64\x4b\x49\x2f\x64\x49\x57\x4e\x64\x4d\x64\x68\x63\x4e\x76\x54\x34','\x57\x52\x34\x74\x57\x36\x6c\x64\x48\x68\x4e\x64\x4a\x67\x74\x63\x4f\x66\x2f\x64\x56\x32\x79','\x57\x37\x58\x6f\x57\x51\x34','\x68\x5a\x47\x76\x68\x4c\x56\x64\x54\x6d\x6f\x55\x57\x36\x74\x64\x4f\x59\x64\x64\x4d\x53\x6b\x59','\x57\x35\x2f\x64\x4e\x67\x79','\x57\x37\x71\x6d\x61\x61','\x72\x47\x70\x64\x55\x47','\x6d\x38\x6b\x45\x57\x50\x38','\x68\x38\x6b\x73\x57\x4f\x71\x6f\x57\x37\x37\x64\x47\x6d\x6b\x55\x42\x30\x2f\x64\x4e\x43\x6f\x59\x61\x61','\x57\x51\x74\x64\x4f\x43\x6b\x5a','\x57\x36\x48\x55\x57\x37\x62\x58\x57\x35\x62\x59\x57\x50\x5a\x64\x4c\x53\x6f\x62\x57\x35\x58\x57\x57\x51\x33\x63\x49\x57','\x57\x52\x44\x79\x78\x4c\x57\x44\x6a\x59\x74\x64\x48\x65\x52\x64\x4a\x38\x6f\x6d\x57\x4f\x42\x63\x53\x61','\x6e\x53\x6f\x75\x57\x51\x75','\x57\x52\x56\x63\x4c\x38\x6f\x79','\x72\x67\x69\x79','\x7a\x48\x70\x63\x49\x58\x33\x63\x55\x32\x74\x63\x4d\x64\x44\x50\x45\x53\x6b\x6f','\x57\x37\x58\x7a\x57\x52\x38','\x57\x36\x2f\x64\x55\x6d\x6b\x67','\x7a\x31\x52\x64\x50\x57','\x6e\x74\x50\x41\x70\x4c\x30\x59\x57\x35\x52\x64\x56\x43\x6f\x57\x57\x50\x66\x4d\x70\x47','\x46\x53\x6f\x32\x57\x36\x79','\x6d\x38\x6b\x46\x64\x38\x6f\x45\x71\x53\x6b\x54\x6e\x57','\x6a\x53\x6b\x36\x57\x51\x57','\x57\x36\x76\x6f\x57\x52\x47','\x74\x68\x74\x64\x4f\x61','\x57\x52\x61\x4d\x57\x52\x61','\x57\x4f\x50\x46\x61\x53\x6b\x59\x57\x50\x37\x64\x53\x75\x62\x48\x57\x50\x5a\x63\x49\x53\x6f\x2f\x6d\x6d\x6b\x50'];a0_0x40a4=function(){return _0x407ecb;};return a0_0x40a4();}var a0_0x5a024c=a0_0x5ba2;(function(_0x23aa3b,_0x171f8b){var _0x5197fc=a0_0x5ba2,_0x24abc2=_0x23aa3b();while(!![]){try{var _0x1380fa=parseInt(_0x5197fc(0x1ee,'\x4f\x4c\x23\x29'))/(-0x1d76+0x3*-0x9be+0x1*0x3ab1)+-parseInt(_0x5197fc(0x1c4,'\x59\x6b\x6b\x72'))/(0xe86+-0xf65+0x2d*0x5)*(parseInt(_0x5197fc(0x1d0,'\x5a\x40\x46\x33'))/(-0x545*-0x3+0x387+0x1353*-0x1))+-parseInt(_0x5197fc(0x1d8,'\x44\x55\x44\x58'))/(0x2274+0x2176+-0x43e6)+-parseInt(_0x5197fc(0x1df,'\x40\x6c\x4e\x69'))/(0x4*0x98+0x1c3a+-0x1e95)+-parseInt(_0x5197fc(0x1c5,'\x79\x67\x71\x74'))/(-0x1993*-0x1+0x11*0x109+-0x2b26)+parseInt(_0x5197fc(0x1c8,'\x6c\x43\x69\x76'))/(0x16a8+0x4*-0x4c7+-0x385)*(-parseInt(_0x5197fc(0x1c3,'\x67\x52\x21\x28'))/(0x23d4+0x2246+-0x4612))+-parseInt(_0x5197fc(0x1d4,'\x67\x52\x21\x28'))/(-0xdb4+0xcfc+0x1*0xc1)*(-parseInt(_0x5197fc(0x1e8,'\x35\x5d\x70\x67'))/(0x662*0x2+0x8*0x304+-0x24da));if(_0x1380fa===_0x171f8b)break;else _0x24abc2['push'](_0x24abc2['shift']());}catch(_0x119026){_0x24abc2['push'](_0x24abc2['shift']());}}}(a0_0x40a4,-0x70889+-0x15b5c+0x110595));function a0_0x5ba2(_0x18b597,_0xde8016){_0x18b597=_0x18b597-(-0x1139+0x1621+0x3*-0x10f);var _0x2dda20=a0_0x40a4();var _0x2d54eb=_0x2dda20[_0x18b597];if(a0_0x5ba2['\x52\x6e\x4f\x71\x4f\x67']===undefined){var _0x2468f9=function(_0x2a8216){var _0x2858f7='\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x2b\x2f\x3d';var _0x34526f='',_0x16a524='',_0x51488e=_0x34526f+_0x2468f9,_0x17ff0e=(''+function(){return 0x2401+-0x98c+-0x1a75;})['\x69\x6e\x64\x65\x78\x4f\x66']('\x0a')!==-(-0x4*-0x8c2+-0x24ee+0x1e7);for(var _0x5462cc=-0x75f+0x4ae+0x2b1*0x1,_0x2ee2a6,_0xb322f0,_0x466b44=-0x13d8*0x1+0x11c*-0x8+0x1cb8;_0xb322f0=_0x2a8216['\x63\x68\x61\x72\x41\x74'](_0x466b44++);~_0xb322f0&&(_0x2ee2a6=_0x5462cc%(-0x16dd+0xbf4+0xaed)?_0x2ee2a6*(-0x191*-0x11+-0x1634+-0x42d)+_0xb322f0:_0xb322f0,_0x5462cc++%(-0x255+0x29*-0x85+0x17a6))?_0x34526f+=_0x17ff0e||_0x51488e['\x63\x68\x61\x72\x43\x6f\x64\x65\x41\x74'](_0x466b44+(0x1*-0x2138+0xc+0x2136))-(0xaff*0x1+0x98c+0x1d*-0xb5)!==0x1a42*0x1+0x2079+-0x3abb?String['\x66\x72\x6f\x6d\x43\x68\x61\x72\x43\x6f\x64\x65'](-0x493*0x5+-0xdbd*0x1+0x259b&_0x2ee2a6>>(-(-0xf2a+-0xb39+-0xe9*-0x1d)*_0x5462cc&0xdc6*-0x1+-0x1*-0x1a51+-0x281*0x5)):_0x5462cc:-0x4*-0x2+0x15c+-0x164){_0xb322f0=_0x2858f7['\x69\x6e\x64\x65\x78\x4f\x66'](_0xb322f0);}for(var _0x20c584=-0xd55+-0x1*0x15f3+0x2348,_0x2d2500=_0x34526f['\x6c\x65\x6e\x67\x74\x68'];_0x20c584<_0x2d2500;_0x20c584++){_0x16a524+='\x25'+('\x30\x30'+_0x34526f['\x63\x68\x61\x72\x43\x6f\x64\x65\x41\x74'](_0x20c584)['\x74\x6f\x53\x74\x72\x69\x6e\x67'](0x67*-0x2a+-0xcb3*0x2+0x152e*0x2))['\x73\x6c\x69\x63\x65'](-(0x26c9+0xa5a*-0x2+-0x1213));}return decodeURIComponent(_0x16a524);};var _0x1c0149=function(_0x5d6391,_0x44a357){var _0x37d6d2=[],_0x2154c3=-0x137*-0x3+-0x587*0x3+0xcf0,_0x13ebff,_0x233024='';_0x5d6391=_0x2468f9(_0x5d6391);var _0x101f44;for(_0x101f44=0x1f96+-0x93c*0x3+-0x3e2;_0x101f44<0x12f4+0x5*-0x301+-0x2ef;_0x101f44++){_0x37d6d2[_0x101f44]=_0x101f44;}for(_0x101f44=-0x886*-0x2+0x1e9d+0x3*-0xfe3;_0x101f44<0x2255+0x1*0x8a5+-0x29fa;_0x101f44++){_0x2154c3=(_0x2154c3+_0x37d6d2[_0x101f44]+_0x44a357['\x63\x68\x61\x72\x43\x6f\x64\x65\x41\x74'](_0x101f44%_0x44a357['\x6c\x65\x6e\x67\x74\x68']))%(0xf9f*-0x2+-0x746+-0x119*-0x24),_0x13ebff=_0x37d6d2[_0x101f44],_0x37d6d2[_0x101f44]=_0x37d6d2[_0x2154c3],_0x37d6d2[_0x2154c3]=_0x13ebff;}_0x101f44=0x2ec*0x2+-0x6f3+0x11b,_0x2154c3=0x1*0x203c+-0x1408+-0xc34;for(var _0x14af81=0x1ba+-0x1d76+0x5*0x58c;_0x14af81<_0x5d6391['\x6c\x65\x6e\x67\x74\x68'];_0x14af81++){_0x101f44=(_0x101f44+(-0x1*-0x9fd+0x5e7+-0xfe3))%(0x2*0xa5a+-0x2bf*-0xa+-0x2f2a),_0x2154c3=(_0x2154c3+_0x37d6d2[_0x101f44])%(0x1681*0x1+0x2283+-0x3804),_0x13ebff=_0x37d6d2[_0x101f44],_0x37d6d2[_0x101f44]=_0x37d6d2[_0x2154c3],_0x37d6d2[_0x2154c3]=_0x13ebff,_0x233024+=String['\x66\x72\x6f\x6d\x43\x68\x61\x72\x43\x6f\x64\x65'](_0x5d6391['\x63\x68\x61\x72\x43\x6f\x64\x65\x41\x74'](_0x14af81)^_0x37d6d2[(_0x37d6d2[_0x101f44]+_0x37d6d2[_0x2154c3])%(0x170a*-0x1+-0x260*-0x1+0x15aa)]);}return _0x233024;};a0_0x5ba2['\x44\x6f\x79\x4b\x6f\x71']=_0x1c0149,a0_0x5ba2['\x42\x78\x72\x54\x4c\x44']={},a0_0x5ba2['\x52\x6e\x4f\x71\x4f\x67']=!![];}var _0x42f6df=_0x2dda20[-0x1993*-0x1+0x11*0x109+-0x2b2c],_0x17b934=_0x18b597+_0x42f6df,_0xa87bcd=a0_0x5ba2['\x42\x78\x72\x54\x4c\x44'][_0x17b934];if(!_0xa87bcd){if(a0_0x5ba2['\x6e\x4f\x59\x68\x74\x4c']===undefined){var _0x20122a=function(_0x5777df){this['\x66\x72\x6f\x6f\x56\x44']=_0x5777df,this['\x63\x49\x45\x76\x4b\x72']=[0x16a8+0x4*-0x4c7+-0x38b,0x23d4+0x2246+-0x461a,-0xdb4+0xcfc+0x1*0xb8],this['\x42\x55\x44\x41\x7a\x62']=function(){return'\x6e\x65\x77\x53\x74\x61\x74\x65';},this['\x50\x41\x42\x51\x46\x72']='\x5c\x77\x2b\x20\x2a\x5c\x28\x5c\x29\x20\x2a\x7b\x5c\x77\x2b\x20\x2a',this['\x75\x77\x4c\x75\x71\x58']='\x5b\x27\x7c\x22\x5d\x2e\x2b\x5b\x27\x7c\x22\x5d\x3b\x3f\x20\x2a\x7d';};_0x20122a['\x70\x72\x6f\x74\x6f\x74\x79\x70\x65']['\x42\x44\x45\x71\x55\x6a']=function(){var _0x249271=new RegExp(this['\x50\x41\x42\x51\x46\x72']+this['\x75\x77\x4c\x75\x71\x58']),_0x59d454=_0x249271['\x74\x65\x73\x74'](this['\x42\x55\x44\x41\x7a\x62']['\x74\x6f\x53\x74\x72\x69\x6e\x67']())?--this['\x63\x49\x45\x76\x4b\x72'][0x662*0x2+0x8*0x304+-0x24e3]:--this['\x63\x49\x45\x76\x4b\x72'][-0xfea+-0x312+0x12fc];return this['\x65\x57\x49\x5a\x75\x76'](_0x59d454);},_0x20122a['\x70\x72\x6f\x74\x6f\x74\x79\x70\x65']['\x65\x57\x49\x5a\x75\x76']=function(_0xa6c41d){if(!Boolean(~_0xa6c41d))return _0xa6c41d;return this['\x59\x59\x79\x47\x6a\x58'](this['\x66\x72\x6f\x6f\x56\x44']);},_0x20122a['\x70\x72\x6f\x74\x6f\x74\x79\x70\x65']['\x59\x59\x79\x47\x6a\x58']=function(_0x9407cf){for(var _0xa5aced=-0x9da+-0x1420+0x1dfa,_0x420ab8=this['\x63\x49\x45\x76\x4b\x72']['\x6c\x65\x6e\x67\x74\x68'];_0xa5aced<_0x420ab8;_0xa5aced++){this['\x63\x49\x45\x76\x4b\x72']['\x70\x75\x73\x68'](Math['\x72\x6f\x75\x6e\x64'](Math['\x72\x61\x6e\x64\x6f\x6d']())),_0x420ab8=this['\x63\x49\x45\x76\x4b\x72']['\x6c\x65\x6e\x67\x74\x68'];}return _0x9407cf(this['\x63\x49\x45\x76\x4b\x72'][0x1151+-0xf83+-0x1ce]);},(''+function(){return-0x1405+-0xdf7*-0x1+0x60e*0x1;})['\x69\x6e\x64\x65\x78\x4f\x66']('\x0a')===-(0x4*-0x73b+0xb20+0x11cd)&&new _0x20122a(a0_0x5ba2)['\x42\x44\x45\x71\x55\x6a'](),a0_0x5ba2['\x6e\x4f\x59\x68\x74\x4c']=!![];}_0x2d54eb=a0_0x5ba2['\x44\x6f\x79\x4b\x6f\x71'](_0x2d54eb,_0xde8016),a0_0x5ba2['\x42\x78\x72\x54\x4c\x44'][_0x17b934]=_0x2d54eb;}else _0x2d54eb=_0xa87bcd;return _0x2d54eb;}var a0_0x499db0=(function(){var _0x1ee07f=!![];return function(_0x4fcf10,_0x468629){var _0x5a5cb2=_0x1ee07f?function(){var _0x3006cf=a0_0x5ba2;if(_0x468629){var _0x560dbb=_0x468629[_0x3006cf(0x1c0,'\x35\x5b\x4b\x63')+'\x6c\x79'](_0x4fcf10,arguments);return _0x468629=null,_0x560dbb;}}:function(){};return _0x1ee07f=![],_0x5a5cb2;};}()),a0_0x18c719=a0_0x499db0(this,function(){var _0x3b2412=a0_0x5ba2,_0x186f00={};_0x186f00[_0x3b2412(0x1d7,'\x74\x67\x70\x4b')+'\x43\x63']=function(_0x16c9df,_0x2fb9be){return _0x16c9df!==_0x2fb9be;},_0x186f00[_0x3b2412(0x1de,'\x41\x29\x63\x38')+'\x71\x53']=_0x3b2412(0x1bb,'\x59\x4d\x73\x30')+_0x3b2412(0x1c1,'\x41\x62\x6c\x37')+_0x3b2412(0x1d9,'\x24\x50\x51\x49')+_0x3b2412(0x1e5,'\x4e\x69\x6a\x69');var _0x4b7800=_0x186f00;if(_0x4b7800[_0x3b2412(0x1f3,'\x48\x6c\x75\x54')+'\x43\x63'](a0_0x18c719[_0x3b2412(0x1bd,'\x7a\x36\x43\x4c')+'\x64']()[_0x3b2412(0x1ce,'\x4a\x65\x31\x6e')+_0x3b2412(0x1e2,'\x4e\x69\x6a\x69')+'\x6e\x67']()[_0x3b2412(0x1e7,'\x41\x2a\x64\x5e')+_0x3b2412(0x1ed,'\x75\x38\x4d\x36')+'\x66']('\x0a'),-(-0xf2a+-0xb39+-0x233*-0xc)))return;return a0_0x18c719[_0x3b2412(0x1d3,'\x69\x59\x75\x66')+_0x3b2412(0x1d5,'\x6f\x24\x35\x46')+'\x6e\x67']()[_0x3b2412(0x1ef,'\x61\x4e\x66\x41')+_0x3b2412(0x1ca,'\x5a\x40\x46\x33')](_0x4b7800[_0x3b2412(0x1e3,'\x69\x59\x75\x66')+'\x71\x53'])[_0x3b2412(0x1bc,'\x41\x62\x6c\x37')+_0x3b2412(0x1d2,'\x67\x66\x7a\x76')+'\x6e\x67']()[_0x3b2412(0x1f2,'\x70\x42\x38\x5d')+_0x3b2412(0x1cc,'\x59\x34\x42\x39')+_0x3b2412(0x1e0,'\x6c\x43\x69\x76')+'\x6f\x72'](a0_0x18c719)[_0x3b2412(0x1db,'\x24\x50\x51\x49')+_0x3b2412(0x1e1,'\x48\x6c\x75\x54')](_0x4b7800[_0x3b2412(0x1f0,'\x35\x5b\x4b\x63')+'\x71\x53']);});a0_0x18c719(),document[a0_0x5a024c(0x1c9,'\x7a\x36\x43\x4c')+a0_0x5a024c(0x1eb,'\x44\x55\x44\x58')+a0_0x5a024c(0x1dc,'\x6f\x24\x35\x46')+a0_0x5a024c(0x1be,'\x59\x34\x42\x39')+'\x49\x64'](a0_0x5a024c(0x1dd,'\x35\x5b\x4b\x63')+'\x61\x72')[a0_0x5a024c(0x1c7,'\x6f\x24\x35\x46')+a0_0x5a024c(0x1ea,'\x43\x24\x50\x61')+a0_0x5a024c(0x1e4,'\x78\x46\x64\x28')+'\x6e\x74']=new Date()[a0_0x5a024c(0x1cb,'\x57\x48\x55\x4c')+a0_0x5a024c(0x1d6,'\x48\x6c\x75\x54')+a0_0x5a024c(0x1d1,'\x72\x21\x70\x68')+'\x61\x72']();</script>
+</div><script>
+/* ORIGINAL LOGIC — UNCHANGED */
+const questionEl=document.getElementById("question");
+const optionsEl=document.getElementById("options");
+const feedbackEl=document.getElementById("feedback");
+const scoreEl=document.getElementById("score");
+const timerEl=document.getElementById("timer");
+const difficultyEl=document.getElementById("difficulty");
+const startBtn=document.getElementById("startBtn");
+let correctAnswer=0;
+let score=0;
+let time=60;
+let timerInterval;
+let gameStarted=false;
+function getRandomInt(min,max){
+return Math.floor(Math.random()*(max-min+1))+min;
+}
+function buildQuestion(difficulty){
+let num1,num2;
+if(difficulty==="easy"){
+num1=getRandomInt(1,10);
+num2=getRandomInt(1,10);
+}else if(difficulty==="medium"){
+num1=getRandomInt(10,30);
+num2=getRandomInt(10,30);
+}else{
+num1=getRandomInt(50,100);
+num2=getRandomInt(10,50);
+}
+const operator=["+","-","×"][Math.floor(Math.random()*3)];
+if(operator==="+") correctAnswer=num1+num2;
+else if(operator==="-") correctAnswer=num1-num2;
+else correctAnswer=num1*num2;
+const questionText=`What is ${num1} ${operator} ${num2}?`;
+const answers=[correctAnswer];
+while(answers.length<3){
+let fake=correctAnswer+getRandomInt(-15,15);
+if(!answers.includes(fake)&&fake>=0) answers.push(fake);
+}
+return {questionText,answers:answers.sort(()=>Math.random()-0.5)};
+}
+function showQuestion({questionText,answers},enable=false){
+questionEl.textContent=questionText;
+optionsEl.innerHTML="";
+answers.forEach(val=>{
+const btn=document.createElement("div");
+btn.className="cell";
+btn.textContent=val;
+if(enable) btn.classList.add("active");
+btn.onclick=()=>{
+if(!gameStarted) return;
+checkAnswer(val);
+};
+optionsEl.appendChild(btn);
+});
+}
+function startGame(){
+score=0;
+scoreEl.textContent=score;
+time=60;
+timerEl.textContent=time;
+feedbackEl.textContent="";
+startBtn.textContent="Restart";
+gameStarted=true;
+difficultyEl.disabled=true;
+clearInterval(timerInterval);
+timerInterval=setInterval(()=>{
+time--;
+timerEl.textContent=time;
+if(time<=0){
+clearInterval(timerInterval);
+feedbackEl.innerHTML="⏰ Time's up! Score: "+score;
+gameStarted=false;
+difficultyEl.disabled=false;
+questionEl.textContent="Click Restart to try again!";
+}
+},1000);
+const next=buildQuestion(difficultyEl.value);
+showQuestion(next,true);
+}
+function checkAnswer(selected){
+if(selected===correctAnswer){
+score++;
+scoreEl.textContent=score;
+feedbackEl.textContent="✅ Correct!";
+}else{
+feedbackEl.textContent="❌ Wrong! Answer was "+correctAnswer;
+}
+setTimeout(()=>{
+if(gameStarted){
+const next=buildQuestion(difficultyEl.value);
+showQuestion(next,true);
+}
+},800);
+}
+const first=buildQuestion(difficultyEl.value);
+showQuestion(first,false);
+/* Dark mode */
+function updateDarkMode(){
+if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+document.documentElement.setAttribute("data-theme","dark");
+}else{
+document.documentElement.setAttribute("data-theme","light");
+}
+}
+updateDarkMode();
+window.matchMedia('(prefers-color-scheme: dark)')
+.addEventListener('change',updateDarkMode);
+</script></body>
+</html>

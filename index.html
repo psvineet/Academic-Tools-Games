@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Tools & Games</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:           #F5F4F1;
+    --surface:      #FAFAF8;
+    --border:       rgba(10,22,40,0.08);
+    --ink:          #0A1628;
+    --ink-soft:     #4a5568;
+    --ink-faint:    #7A8494;
+    --accent:       #C9A84C;
+    --accent-soft:  rgba(201,168,76,0.12);
+    --shadow:       0 6px 24px rgba(10,22,40,0.08);
+    --radius:       18px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--accent);
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .logo-icon svg { width: 21px; height: 21px; }
+
+  .logo-text {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  .logo-sub {
+    font-size: 12px;
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin-top: 1px;
+  }
+
+  .logo-sub a { color: var(--ink-faint); text-decoration: none; }
+  .logo-sub a:hover { color: var(--accent); text-decoration: underline; }
+
+  /* CONTAINER */
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 32px 20px 64px;
+  }
+
+  /* (intro moved into header) */
+  .intro-unused {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* GRID OF CATEGORIES */
+  .categories {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+
+  @media (min-width: 720px) {
+    .categories { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  }
+
+  @media (min-width: 1040px) {
+    .categories { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  }
+
+  .cat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .cat-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .cat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--accent-soft);
+  }
+  .cat-icon svg { width: 19px; height: 19px; }
+
+  .cat-title-wrap { flex: 1; }
+
+  .cat-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .cat-count {
+    font-size: 12px;
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin-top: 1px;
+  }
+
+  .cat-chevron {
+    width: 18px;
+    height: 18px;
+    color: var(--ink-faint);
+    transition: transform 0.22s ease;
+    flex-shrink: 0;
+  }
+  .cat-card.open > .cat-header .cat-chevron { transform: rotate(180deg); }
+
+  /* ITEM LIST */
+  .item-list-outer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.28s cubic-bezier(.4,0,.2,1);
+  }
+  .cat-card.open .item-list-outer { grid-template-rows: 1fr; }
+
+  .item-list {
+    overflow: hidden;
+    border-top: 0px solid var(--border);
+    padding: 0 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease, padding 0.28s ease, border-top-width 0.28s ease;
+  }
+  .cat-card.open .item-list {
+    border-top: 1px solid var(--border);
+    padding: 8px;
+    opacity: 1;
+  }
+
+  .item-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.14s;
+  }
+  .item-link:hover { background: var(--bg); }
+
+  .item-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .item-icon svg { width: 16px; height: 16px; color: var(--accent); }
+
+  .item-name {
+    flex: 1;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .item-badge {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+  .item-badge.play { background: var(--accent); }
+
+  /* CATEGORY ACCENT ICON COLORS */
+  .cat--chemistry .cat-icon svg { color:#4d7c4a; }
+  .cat--chemistry .cat-icon { background:rgba(77,124,74,0.12); }
+  .cat--health    .cat-icon svg { color:#a8473a; }
+  .cat--health    .cat-icon { background:rgba(168,71,58,0.12); }
+  .cat--math      .cat-icon svg { color:#3d5a80; }
+  .cat--math      .cat-icon { background:rgba(61,90,128,0.12); }
+  .cat--misc      .cat-icon svg { color:#7d5ba6; }
+  .cat--misc      .cat-icon { background:rgba(125,91,166,0.12); }
+  .cat--pharma    .cat-icon svg { color:#b8860b; }
+  .cat--pharma    .cat-icon { background:rgba(184,134,11,0.12); }
+  .cat--games     .cat-icon svg { color:#a8473a; }
+  .cat--games     .cat-icon { background:rgba(168,71,58,0.12); }
+  .cat--utilities .cat-icon svg { color:#3f7368; }
+  .cat--utilities .cat-icon { background:rgba(63,115,104,0.12); }
+
+  /* DESKTOP POLISH */
+  @media (min-width: 720px) {
+    .cat-card { transition: box-shadow 0.18s ease, transform 0.18s ease; }
+    .cat-card:hover { box-shadow: 0 4px 8px rgba(20,22,31,0.06), 0 14px 32px rgba(20,22,31,0.08); transform: translateY(-2px); }
+    .intro { padding: 20px 26px; }
+    .intro-text p { font-size: 13.5px; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .header-inner { padding: 14px 16px; }
+    .logo-text { font-size: 16px; }
+    .container { padding: 24px 12px 48px; }
+    .intro { flex-direction: column; }
+  }
+  /* FOOTER */
+  footer {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    padding: 14px 16px 28px;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-text">Academic Tools & Games</div>
+        <div class="logo-sub">By VPS &middot; <a href="mailto:connect.vps@icloud.com">connect.vps@icloud.com</a></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="container">
+
+  <div class="categories">
+
+
+    <!-- CHEMISTRY -->
+    <div class="cat-card cat--chemistry" id="cat-chemistry">
+      <div class="cat-header" onclick="toggleCat('cat-chemistry')">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 3h6M9 3v7L4.5 17A2 2 0 006 20h12a2 2 0 001.5-3.3L15 10V3"/>
+            <line x1="6" y1="14" x2="18" y2="14"/>
+          </svg>
+        </div>
+        <div class="cat-title-wrap">
+          <div class="cat-name">Chemistry</div>
+          <div class="cat-count">1 tool</div>
+        </div>
+        <svg class="cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="item-list-outer"><div class="item-list">
+        <a class="item-link" href="tools/chemistry/ccc/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">Chemical Concentration Calculator</span>
+          <span class="item-badge">Open</span>
+        </a>
+      </div></div>
+    </div>
+
+    <!-- HEALTH -->
+    <div class="cat-card cat--health" id="cat-health">
+      <div class="cat-header" onclick="toggleCat('cat-health')">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <div class="cat-title-wrap">
+          <div class="cat-name">Health</div>
+          <div class="cat-count">2 tools</div>
+        </div>
+        <svg class="cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="item-list-outer"><div class="item-list">
+        <a class="item-link" href="tools/health/bmi/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">BMI Calculator</span>
+          <span class="item-badge">Open</span>
+        </a>
+        <a class="item-link" href="tools/health/dsc/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">Dose Calculator</span>
+          <span class="item-badge">Open</span>
+        </a>
+      </div></div>
+    </div>
+
+    <!-- MATH -->
+    <div class="cat-card cat--math" id="cat-math">
+      <div class="cat-header" onclick="toggleCat('cat-math')">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="6" y2="12"/>
+            <polyline points="6 12 9 19 12 5 15 12 21 12"/>
+          </svg>
+        </div>
+        <div class="cat-title-wrap">
+          <div class="cat-name">Math</div>
+          <div class="cat-count">2 tools</div>
+        </div>
+        <svg class="cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="item-list-outer"><div class="item-list">
+        <a class="item-link" href="tools/math/calculator/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">Scientific Calculator</span>
+          <span class="item-badge">Open</span>
+        </a>
+        <a class="item-link" href="tools/math/pc/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">Prefix Converter</span>
+          <span class="item-badge">Open</span>
+        </a>
+      </div></div>
+    </div>
+
+    <!-- MISC -->
+    <div class="cat-card cat--misc" id="cat-misc">
+      <div class="cat-header" onclick="toggleCat('cat-misc')">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
+          </svg>
+        </div>
+        <div class="cat-title-wrap">
+          <div class="cat-name">Misc</div>
+          <div class="cat-count">1 tool</div>
+        </div>
+        <svg class="cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="item-list-outer"><div class="item-list">
+        <a class="item-link" href="tools/misc/rg/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">Resume Generator</span>
+          <span class="item-badge">Open</span>
+        </a>
+      </div></div>
+    </div>
+
+    <!-- PHARMA ACADEMIC -->
+    <div class="cat-card cat--pharma" id="cat-pharma">
+      <div class="cat-header" onclick="toggleCat('cat-pharma')">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.5 20.5L3.5 13.5a5 5 0 017.07-7.07l7 7a5 5 0 01-7.07 7.07z"/>
+            <line x1="8.5" y1="11.5" x2="15.5" y2="11.5"/>
+          </svg>
+        </div>
+        <div class="cat-title-wrap">
+          <div class="cat-name">Pharma Academic</div>
+          <div class="cat-count">1 tool</div>
+        </div>
+        <svg class="cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="item-list-outer"><div class="item-list">
+        <a class="item-link" href="tools/pharma-academic/pcsg/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">Patient Case Summary Generator</span>
+          <span class="item-badge">Open</span>
+        </a>
+      </div></div>
+    </div>
+
+    <!-- GAMES -->
+    <div class="cat-card cat--games" id="cat-games">
+      <div class="cat-header" onclick="toggleCat('cat-games')">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="6" width="20" height="12" rx="2"/>
+            <line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/>
+            <circle cx="15" cy="11" r="1" fill="currentColor" stroke="none"/>
+            <circle cx="17" cy="13" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <div class="cat-title-wrap">
+          <div class="cat-name">Games</div>
+          <div class="cat-count">6 games</div>
+        </div>
+        <svg class="cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="item-list-outer"><div class="item-list">
+        <a class="item-link" href="games/Color Match/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">Color Match</span>
+          <span class="item-badge play">Play</span>
+        </a>
+        <a class="item-link" href="games/Memory Match/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">Memory Match</span>
+          <span class="item-badge play">Play</span>
+        </a>
+        <a class="item-link" href="games/Number Puzzle/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">Number Puzzle</span>
+          <span class="item-badge play">Play</span>
+        </a>
+        <a class="item-link" href="games/Quick Math Quiz/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">Quick Math Quiz</span>
+          <span class="item-badge play">Play</span>
+        </a>
+        <a class="item-link" href="games/Tic Tac Toe/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">Tic Tac Toe</span>
+          <span class="item-badge play">Play</span>
+        </a>
+        <a class="item-link" href="games/Word Unscramble Master/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">Word Unscramble Master</span>
+          <span class="item-badge play">Play</span>
+        </a>
+      </div></div>
+    </div>
+
+    <!-- UTILITIES -->
+    <div class="cat-card cat--utilities" id="cat-utilities">
+      <div class="cat-header" onclick="toggleCat('cat-utilities')">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+          </svg>
+        </div>
+        <div class="cat-title-wrap">
+          <div class="cat-name">Utilities</div>
+          <div class="cat-count">1 tool</div>
+        </div>
+        <svg class="cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="item-list-outer"><div class="item-list">
+        <a class="item-link" href="tools/utilities/uc/">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <span class="item-name">Unit Converter</span>
+          <span class="item-badge">Open</span>
+        </a>
+      </div></div>
+    </div>
+
+  </div>
+</div>
+
+<footer>© <span id="fyear"></span> Developed with 🫀 by Vineet Pratap Singh</footer>
+
+<script>
+  function toggleCat(id) {
+    const card = document.getElementById(id);
+    const willOpen = !card.classList.contains('open');
+    document.querySelectorAll('.cat-card.open').forEach(c => {
+      if (c !== card) c.classList.remove('open');
+    });
+    card.classList.toggle('open', willOpen);
+    if (willOpen) {
+      requestAnimationFrame(() => {
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    }
+  }
+  document.getElementById('fyear').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
