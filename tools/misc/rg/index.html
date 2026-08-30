@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="https://i.ibb.co/j9WGfB8h/favicon.png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Resume Generator</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -22,6 +22,8 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Noto Sans', sans-serif;
@@ -72,19 +74,37 @@ input, textarea, select {
   font-size: 14px; font-family: 'Noto Sans', sans-serif;
   border-radius: 10px; border: 1.5px solid var(--border);
   background: #fff; color: var(--text);
-  transition: border-color 0.16s, box-shadow 0.16s;
+  transition: border-color 0.16s, box-shadow 0.16s, background 0.16s;
   -webkit-appearance: none;
 }
+input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.75; }
+input:hover, textarea:hover, select:hover { border-color: rgba(10,22,40,0.18); }
 input:focus, textarea:focus, select:focus {
   border-color: var(--gold); outline: none;
   box-shadow: 0 0 0 3px rgba(201,168,76,0.13);
 }
-input.error { border-color: #e74c3c !important; }
+input.error { border-color: #e74c3c !important; animation: shake 0.3s; }
+input.error:focus { box-shadow: 0 0 0 3px rgba(231,76,60,0.15); }
+@keyframes shake {
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
 textarea { resize: vertical; min-height: 78px; }
 select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A8494' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px; cursor: pointer; }
 
 /* ── MULTI ENTRY ── */
 .multi-group { margin-bottom: 6px; }
+#education-group.multi-group { margin-bottom: 10px; }
+
+/* Grid layout for skills/languages/interests on desktop */
+.simple-group-wrap { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+.simple-group-wrap .grid-group { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 10px; margin-bottom: 0; }
+.simple-group-wrap .grid-group .multi-entry { margin-bottom: 0; }
+.simple-group-wrap .add-btn { flex-shrink: 0; margin-bottom: 0; white-space: nowrap; }
+@media (max-width: 600px) {
+  .simple-group-wrap { flex-direction: column; align-items: stretch; }
+  .simple-group-wrap .grid-group { grid-template-columns: 1fr; }
+}
 .multi-entry { display: flex; gap: 8px; margin-bottom: 9px; align-items: flex-start; flex-wrap: wrap; }
 .multi-entry input, .multi-entry select { flex: 1; min-width: 0; margin: 0; }
 .multi-entry .entry-row { display: flex; gap: 8px; flex: 1; min-width: 0; flex-wrap: nowrap; align-items: center; }
@@ -99,6 +119,7 @@ select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.o
   padding: 0; transition: all 0.16s; line-height: 1;
 }
 .remove-btn:hover { background: #fef0f0; border-color: #e74c3c; color: #e74c3c; }
+.remove-btn:active { transform: scale(0.9); }
 
 /* sub-row for 2nd line of multi-entry (e.g. link) */
 .entry-subrow { width: 100%; display: flex; gap: 8px; margin-top: 6px; }
@@ -123,16 +144,19 @@ select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.o
 
 /* ── GENERATE BUTTON ── */
 .generate-btn {
-  display: block; width: 100%; padding: 15px;
+  display: block; width: auto; margin: 28px auto 0; padding: 13px 34px;
   border-radius: 13px; border: none;
   background: linear-gradient(135deg, #b8942e 0%, #C9A84C 40%, #ddb96b 100%);
   color: #fff; font-family: 'Noto Sans', sans-serif;
-  font-weight: 700; font-size: 15px; letter-spacing: 0.2px;
-  cursor: pointer; margin-top: 28px;
+  font-weight: 700; font-size: 14.5px; letter-spacing: 0.2px;
+  cursor: pointer;
   transition: all 0.22s; box-shadow: 0 4px 18px rgba(201,168,76,0.32);
 }
 .generate-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(201,168,76,0.45); }
 .generate-btn:active { transform: scale(0.98); }
+@media (max-width: 600px) {
+  .generate-btn { width: 100%; }
+}
 
 /* ── POPUP OVERLAY ── */
 #resume-popup {
@@ -304,8 +328,11 @@ select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.o
 @media (max-width: 600px) {
   .form-container { padding: 20px 15px 20px; }
   .form-grid, .form-grid.triple { grid-template-columns: 1fr; }
-  .multi-entry .entry-row { flex-direction: column; flex-wrap: wrap; }
-  .multi-entry .entry-row input, .multi-entry .entry-row select { min-width: 0; width: 100%; }
+  .multi-entry { flex-direction: column; align-items: stretch; }
+  .multi-entry .entry-row { flex-direction: column; flex-wrap: wrap; width: 100%; }
+  .multi-entry .entry-row input, .multi-entry .entry-row select { min-width: 0; width: 100%; max-width: none; }
+  .multi-entry[data-type="edu"] .entry-row { max-width: none !important; }
+  .multi-entry .remove-btn { align-self: flex-end; margin-top: 0; }
   .entry-subrow { flex-direction: column; }
   .popup-actions { gap: 7px; }
   .popup-actions button { font-size: 12px; padding: 10px 12px; }
@@ -371,18 +398,22 @@ footer { text-align: center; font-size: 12px; color: var(--muted); padding: 20px
   <div class="section-label"><div class="line"></div><span>Education</span><div class="line"></div></div>
   <div class="multi-group" id="education-group">
     <div class="multi-entry" data-type="edu">
-      <div class="entry-row">
-        <input type="text" data-field="year"   placeholder="Year...">
-        <input type="text" data-field="degree" placeholder="Degree...">
-        <input type="text" data-field="inst"   placeholder="Institution...">
-        <select data-field="gradetype" style="max-width:110px;">
-          <option value="">Grade Type</option>
-          <option value="GPA">GPA</option>
-          <option value="SGPA">SGPA</option>
-          <option value="CGPA">CGPA</option>
-          <option value="%">Percentage</option>
-        </select>
-        <input type="text" data-field="gpa" placeholder="Score..." style="max-width:88px;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:8px; min-width:0;">
+        <div class="entry-row">
+          <input type="text" data-field="year"   placeholder="Year...">
+          <input type="text" data-field="degree" placeholder="Degree...">
+          <input type="text" data-field="inst"   placeholder="Institution...">
+        </div>
+        <div class="entry-row" style="max-width:260px;">
+          <select data-field="gradetype">
+            <option value="">Grade</option>
+            <option value="GPA">GPA</option>
+            <option value="SGPA">SGPA</option>
+            <option value="CGPA">CGPA</option>
+            <option value="%">Percentage</option>
+          </select>
+          <input type="text" data-field="gpa" placeholder="Score...">
+        </div>
       </div>
       <button class="remove-btn" onclick="removeRow(this)" title="Remove">×</button>
     </div>
@@ -395,10 +426,7 @@ footer { text-align: center; font-size: 12px; color: var(--muted); padding: 20px
     <div class="multi-entry" data-type="cert">
       <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
         <input type="text" data-field="name" placeholder="Certification...">
-        <div class="entry-subrow">
-          <span class="sub-label">Link (optional)</span>
-          <input type="url" data-field="link" placeholder="https://...">
-        </div>
+        <input type="url" data-field="link" placeholder="Link (optional) e.g. https://...">
       </div>
       <button class="remove-btn" onclick="removeRow(this)" title="Remove">×</button>
     </div>
@@ -407,33 +435,39 @@ footer { text-align: center; font-size: 12px; color: var(--muted); padding: 20px
 
   <!-- Skills -->
   <div class="section-label"><div class="line"></div><span>Skills</span><div class="line"></div></div>
-  <div class="multi-group" id="skills-group">
-    <div class="multi-entry">
-      <input type="text" placeholder="Skill...">
-      <button class="remove-btn" onclick="removeRow(this)" title="Remove">×</button>
+  <div class="simple-group-wrap">
+    <div class="multi-group grid-group" id="skills-group">
+      <div class="multi-entry">
+        <input type="text" placeholder="Skill...">
+        <button class="remove-btn" onclick="removeRow(this)" title="Remove">×</button>
+      </div>
     </div>
+    <button class="add-btn" onclick="addSimpleRow('skills-group','Skill...')">+ Add Skill</button>
   </div>
-  <button class="add-btn" onclick="addSimpleRow('skills-group','Skill...')">+ Add Skill</button>
 
   <!-- Languages -->
   <div class="section-label"><div class="line"></div><span>Languages</span><div class="line"></div></div>
-  <div class="multi-group" id="languages-group">
-    <div class="multi-entry">
-      <input type="text" placeholder="Language...">
-      <button class="remove-btn" onclick="removeRow(this)" title="Remove">×</button>
+  <div class="simple-group-wrap">
+    <div class="multi-group grid-group" id="languages-group">
+      <div class="multi-entry">
+        <input type="text" placeholder="Language...">
+        <button class="remove-btn" onclick="removeRow(this)" title="Remove">×</button>
+      </div>
     </div>
+    <button class="add-btn" onclick="addSimpleRow('languages-group','Language...')">+ Add Language</button>
   </div>
-  <button class="add-btn" onclick="addSimpleRow('languages-group','Language...')">+ Add Language</button>
 
   <!-- Interests -->
   <div class="section-label"><div class="line"></div><span>Interests &amp; Hobbies</span><div class="line"></div></div>
-  <div class="multi-group" id="interests-group">
-    <div class="multi-entry">
-      <input type="text" placeholder="Interest...">
-      <button class="remove-btn" onclick="removeRow(this)" title="Remove">×</button>
+  <div class="simple-group-wrap">
+    <div class="multi-group grid-group" id="interests-group">
+      <div class="multi-entry">
+        <input type="text" placeholder="Interest...">
+        <button class="remove-btn" onclick="removeRow(this)" title="Remove">×</button>
+      </div>
     </div>
+    <button class="add-btn" onclick="addSimpleRow('interests-group','Interest...')">+ Add Interest</button>
   </div>
-  <button class="add-btn" onclick="addSimpleRow('interests-group','Interest...')">+ Add Interest</button>
 
   <!-- Projects -->
   <div class="section-label"><div class="line"></div><span>Projects &amp; Work Examples</span><div class="line"></div></div>
@@ -442,10 +476,7 @@ footer { text-align: center; font-size: 12px; color: var(--muted); padding: 20px
       <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
         <input type="text" data-field="title" placeholder="Project / Role Title...">
         <input type="text" data-field="desc"  placeholder="What you built, achieved, or contributed...">
-        <div class="entry-subrow">
-          <span class="sub-label">Link (optional)</span>
-          <input type="url" data-field="link" placeholder="https://...">
-        </div>
+        <input type="url" data-field="link" placeholder="Link (optional) e.g. https://...">
       </div>
       <button class="remove-btn" onclick="removeRow(this)" title="Remove">×</button>
     </div>
